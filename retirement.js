@@ -78,17 +78,34 @@ const startProjection = (name, bal, add, rate, years) => {
 
 const setTestData = () => {
     resetForm();
-    // TODO: set default values for all input fields
+    // set default values for all input fields
+    nameIn.value = "John Doe";
+    emailIn.value = "john.doe@example.com";
+    investIn.value = "10000";
+    addIn.value = "500";
+    rateIn.value = "5";
+    dateIn.value = "2040-01-01";
 };
 
 const resetForm = () => {
-    /* TODO:
-        clear all input fields
-        clear the interval
-        document.querySelectorAll(".error").forEach(s => s.textContent = "*");
+    /*
+        clears all input fields
+        clears the interval
+        clears all errors
         set the body width to 350px (like code above)
         set the focus to the name input field
      */
+    document.querySelectorAll(".error").forEach(s => s.textContent = "*");
+        nameIn.value = "";
+        emailIn.value = "";
+        investIn.value = "";
+        addIn.value = "";
+        rateIn.value = "";
+        dateIn.value = "";
+        errBox.textContent = "";
+        statusMsg.textContent = "";
+        output.innerHTML = "";
+
 };
 
 document.addEventListener("DOMContentLoaded", () => {
