@@ -29,9 +29,13 @@ const processEntries = (evt) => {
     let years = 0;
 
     evt.preventDefault();
-    resetForm()
+    resetForm();
 
-    // TODO: Validate Name
+    // Validate Name
+    if (!nameIn.value) {
+        isValid = false;
+        name_error.textContent = "Please enter your name.";
+    }
 
     // TODO: Validate Email
 
@@ -48,7 +52,11 @@ const processEntries = (evt) => {
             set the body width to 700px (like code above)
             errBox.innerText = e.message;
      */
-};
+    if (!isValid) {
+        evt.preventDefault();
+        document.body.style.width = "750px";
+    }
+}
 
 const startProjection = (name, bal, add, rate, years) => {
     statusMsg.textContent = `Live Projection: ${name}`;
@@ -105,6 +113,7 @@ const resetForm = () => {
         errBox.textContent = "";
         statusMsg.textContent = "";
         output.innerHTML = "";
+        document.body.style.width = "350px";
 
 };
 
