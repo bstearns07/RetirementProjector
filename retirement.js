@@ -100,13 +100,21 @@ const startProjection = (name, bal, add, rate, years) => {
 
 const setTestData = () => {
     resetForm();
+    /*  set default value for all input fields
+        Setup the future date to 10 years from now:
+        (1) create a const variable named future and set it to the current date (Ch 8)
+        (2) add 10 years to the future date variable (Ch 8)
+        (3) use toISOString().split('T')[0] to display the future date (Ch 8)
+     */
     // set default values for all input fields
     nameIn.value = "John Doe";
     emailIn.value = "john.doe@example.com";
     investIn.value = "10000";
     addIn.value = "500";
     rateIn.value = "5";
-    dateIn.value = "2040-01-01";
+    const retireDate = new Date();
+    retireDate.setFullYear(retireDate.getFullYear() + 10);
+    dateIn.value = retireDate.toISOString().split('T')[0];
 };
 
 const resetForm = () => {
@@ -116,6 +124,18 @@ const resetForm = () => {
         clears all errors
         set the body width to 350px (like code above)
         set the focus to the name input field
+     */
+    /* TODO:
+        Using textContent clear the following error spans
+            errBox (#error_message)
+            output (#projection_output)
+            statusMsg (#status_message)
+        clear the interval projectionTimer (Ch 8)
+        reset all the error spans back to *
+            document.querySelectorAll(".error").forEach(s => s.textContent = "*");
+        set the body width to 350px (see code example above)
+        set the statusMsg to red (see code example above)
+        set the focus to the name input field (Ch 9)
      */
     document.querySelectorAll(".error").forEach(s => s.textContent = "*");
     document.querySelectorAll("input").forEach(s => s.value = "");
