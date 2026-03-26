@@ -55,7 +55,7 @@ const processEntries = (evt) => {
     let years = 0;
 
     evt.preventDefault();
-    // resetForm();
+    clearErrors();
 
     // Validate Name
     if (nameIn.value.trim() === "") {
@@ -63,15 +63,14 @@ const processEntries = (evt) => {
         nameErr.textContent = nameIn.title; // Pull error message from title attribute
     }
     // TODO: Validate Email
-    const emailPattern = /^[\w\.\-]+@[\w\.\-]+\.[a-zA-Z]+$/;
+    const emailPattern = "/^[\\w\\.\\-]+@[\\w\\.\\-]+\\.[a-zA-Z]+$/";
     if (emailIn.value.trim() === "") {
         isValid = false;
         emailErr.textContent = emailIn.title; // Pull error message from title attribute
-    
     }
     else if (!emailPattern.test(emailIn.value.trim())) {
         isValid = false;
-        emailErr.textContent = "Please enter a valid email address.";
+        emailErr.textContent = emailIn.title;
     }
 
     if (investIn.value.trim() === "") {
@@ -113,6 +112,7 @@ const processEntries = (evt) => {
     if (!isValid) {
         evt.preventDefault();
         document.body.style.width = "750px";
+        nameIn.focus();
     }
 }
 
@@ -212,7 +212,16 @@ const resetForm = () => {
     nameIn.focus();
 };
 
-// add DOMContentLoaded listener's for buttons and ENTER button functionality
+/**********************************************************************************************************************
+ * Function that clears all error messages
+ *
+ * @returns {void}
+ **********************************************************************************************************************/
+const clearErrors = () => {
+    document.querySelectorAll(".error").forEach(s => s.textContent = "*");
+}
+
+// add DOMContentLoaded listener's for button functionality
 document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", processEntries);
     form.addEventListener("reset", resetForm);
