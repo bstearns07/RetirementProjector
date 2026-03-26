@@ -9,6 +9,14 @@ const investIn  = $("#investment");
 const addIn     = $("#monthly_add");
 const rateIn    = $("#rate");
 const dateIn    = $("#retirement_date");
+
+const nameErr = $("#name_error");
+const emailErr = $("#email_error");
+const investErr = $("#investment_error");
+const addErr = $("#add_error");
+const rateErr = $("#rate_error");
+const dateErr = $("#retire_date_error");
+
 const errBox    = $("#error_message");
 const statusMsg = $("#status_message");
 const output    = $("#projection_output");
@@ -34,12 +42,18 @@ const processEntries = (evt) => {
     // Validate Name
     if (!nameIn.value) {
         isValid = false;
-        name_error.textContent = "Please enter your name.";
+        nameErr.textContent = "Please enter your name.";
     }
-
     // TODO: Validate Email
-
+    if (!emailIn.value) {
+        isValid = false;
+        emailErr.textContent = "Please enter your email.";
+    }
     // TODO: Validate Date
+    if (!investIn.value) {
+        isValid = false;
+        investErr.textContent = "Please enter your investment.";
+    }
 
     // TODO: Numeric Validations
 
