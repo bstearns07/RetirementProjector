@@ -1,3 +1,13 @@
+/**********************************************************************************************************************
+ * Program............: Smartwatch FAQ
+ * Programmers........: Ben Stearns and Isaiah Guilliatt
+ * Date...............: 3-26-26
+ * GitHub Repo........: https://github.com/bstearns07/RetirementProjector
+ * Program Summary....: a JavaScript web application for calculating and simulating the growth of a retirement
+ *                      account
+ * File Description...: defines the JavaScript logic for handling image swaps and collapsing text on button clicks
+ **********************************************************************************************************************/
+
 "use strict";
 
 // Defer in HTML allows us to grab these immediately at the top
@@ -42,18 +52,29 @@ const processEntries = (evt) => {
     // Validate Name
     if (!nameIn.value) {
         isValid = false;
-        nameErr.textContent = "Please enter your name.";
+        nameErr.textContent = "Please enter your full name.";
     }
     // TODO: Validate Email
     if (!emailIn.value) {
         isValid = false;
-        emailErr.textContent = "Please enter your email.";
+        emailErr.textContent = "Please a valid email address.";
     }
-    // TODO: Validate Date
+
     if (!investIn.value) {
         isValid = false;
-        investErr.textContent = "Please enter your investment.";
+        investErr.textContent = "Current savings total, not less than 0.";
     }
+
+    if (!addIn.value) {
+        isValid = false;
+        addErr.textContent = "Please enter how much you plan to add per month";
+    }
+    else if(addIn.value < 0){
+        isValid = false;
+        addErr.textContent = "How much you add each month, not less than 0.";
+    }
+
+    // TODO: Validate Date
 
     // TODO: Numeric Validations
 
@@ -138,8 +159,12 @@ const resetForm = () => {
         set the focus to the name input field (Ch 9)
      */
     document.querySelectorAll(".error").forEach(s => s.textContent = "*");
+    clearTimeout(projectionTimer);
     document.querySelectorAll("input").forEach(s => s.value = "");
     document.body.style.width = "350px";
+    nameErr.focus();
+    statusMsg.style.color = "red";
+    nameIn.focus();
 };
 
 document.addEventListener("DOMContentLoaded", () => {
