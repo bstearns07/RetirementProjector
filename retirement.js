@@ -50,26 +50,41 @@ const processEntries = (evt) => {
     // resetForm();
 
     // Validate Name
-    if (!nameIn.value) {
+    if (nameIn.value.trim() == "") {
         isValid = false;
-        nameErr.textContent = "Please enter your full name.";
+        nameErr.textContent = nameIn.title; // Pull error message from title attribute
     }
     // TODO: Validate Email
-    if (!emailIn.value) {
+    const emailPattern = /^[\w\.\-]+@[\w\.\-]+\.[a-zA-Z]+$/;
+    if (emailIn.value.trim() == "") {
         isValid = false;
-        emailErr.textContent = "Please a valid email address.";
+        emailErr.textContent = emailIn.title; // Pull error message from title attribute
+    
+    }
+    else if (!emailPattern.test(emailIn.value.trim())) {
+        isValid = false;
+        emailErr.textContent = "Please enter a valid email address.";
     }
 
-    if (!investIn.value) {
+    if (investIn.value.trim() == "") {
         isValid = false;
-        investErr.textContent = "Current savings total, not less than 0.";
+        investErr.textContent = investIn.title; // Pull error message from title attribute
     }
 
-    if (!addIn.value) {
+    if (rateIn.value.trim() == "" || rateIn.value.trim() < 0 || rateIn.value.trim() > 20) {
         isValid = false;
-        addErr.textContent = "Please enter how much you plan to add per month";
+        rateErr.textContent = rateIn.title; // Pull error message from title attribute
     }
-    else if(addIn.value < 0){
+    // TO DO: Make sure date is within 75 DOES NOT WORKKK
+    if (retirement_date.value.trim() == "" || retirement_date.value < 0 || retirement_date.value > 75) { 
+        isValid = false;
+        dateErr.textContent = dateIn.title; // Pull error message from title attribute
+    }
+
+    if (addIn.value.trim() == "") {
+        isValid = false;
+        addErr.textContent = addIn.title; // Pull error message from title attribute
+    }else if(addIn.value.trim() < 0){
         isValid = false;
         addErr.textContent = "How much you add each month, not less than 0.";
     }
