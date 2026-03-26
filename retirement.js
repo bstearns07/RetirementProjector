@@ -35,6 +35,7 @@ const testData  = $("#test_data");
 
 let projectionTimer = null;
 
+// define a number formatting object that formats numbers in the form of US currency
 const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -42,6 +43,13 @@ const formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2
 });
 
+/**********************************************************************************************************************
+ * Function that processes user entries for valid data and throws an error if invalid data is found
+ *
+ * @param evt  The submit button event
+ *
+ * @returns {void}
+ **********************************************************************************************************************/
 const processEntries = (evt) => {
     let isValid = true;
     let years = 0;
@@ -50,13 +58,13 @@ const processEntries = (evt) => {
     // resetForm();
 
     // Validate Name
-    if (nameIn.value.trim() == "") {
+    if (nameIn.value.trim() === "") {
         isValid = false;
         nameErr.textContent = nameIn.title; // Pull error message from title attribute
     }
     // TODO: Validate Email
     const emailPattern = /^[\w\.\-]+@[\w\.\-]+\.[a-zA-Z]+$/;
-    if (emailIn.value.trim() == "") {
+    if (emailIn.value.trim() === "") {
         isValid = false;
         emailErr.textContent = emailIn.title; // Pull error message from title attribute
     
@@ -66,22 +74,22 @@ const processEntries = (evt) => {
         emailErr.textContent = "Please enter a valid email address.";
     }
 
-    if (investIn.value.trim() == "") {
+    if (investIn.value.trim() === "") {
         isValid = false;
         investErr.textContent = investIn.title; // Pull error message from title attribute
     }
 
-    if (rateIn.value.trim() == "" || rateIn.value.trim() < 0 || rateIn.value.trim() > 20) {
+    if (rateIn.value.trim() === "" || rateIn.value.trim() < 0 || rateIn.value.trim() > 20) {
         isValid = false;
         rateErr.textContent = rateIn.title; // Pull error message from title attribute
     }
     // TO DO: Make sure date is within 75 DOES NOT WORKKK
-    if (retirement_date.value.trim() == "" || retirement_date.value < 0 || retirement_date.value > 75) { 
+    if (retirement_date.value.trim() === "" || retirement_date.value < 0 || retirement_date.value > 75) {
         isValid = false;
         dateErr.textContent = dateIn.title; // Pull error message from title attribute
     }
 
-    if (addIn.value.trim() == "") {
+    if (addIn.value.trim() === "") {
         isValid = false;
         addErr.textContent = addIn.title; // Pull error message from title attribute
     }else if(addIn.value.trim() < 0){
@@ -108,6 +116,19 @@ const processEntries = (evt) => {
     }
 }
 
+/**********************************************************************************************************************
+ * Function that calculates how much the user's account will grow per year up to their retirement year
+ *
+ * Displays this information as output using a timer
+ *
+ * @param name  User's name
+ * @param bal The user's starting retirement account balance
+ * @param add The amount per month user will add to the account
+ * @param rate The interest rate of the account
+ * @param years Keeps track of year iteration count
+ *
+ * @returns {void}
+ **********************************************************************************************************************/
 const startProjection = (name, bal, add, rate, years) => {
     statusMsg.textContent = `Live Projection: ${name}`;
     statusMsg.style.color = "red";
@@ -134,10 +155,15 @@ const startProjection = (name, bal, add, rate, years) => {
      */
 };
 
+/**********************************************************************************************************************
+ * Function that clears the form and loads valid test data into all input fields for testing
+ *
+ * @returns {void}
+ **********************************************************************************************************************/
 const setTestData = () => {
     resetForm();
     /*  set default value for all input fields
-        Setup the future date to 10 years from now:
+        Set up the future date to 10 years from now:
         (1) create a const variable named future and set it to the current date (Ch 8)
         (2) add 10 years to the future date variable (Ch 8)
         (3) use toISOString().split('T')[0] to display the future date (Ch 8)
@@ -153,6 +179,11 @@ const setTestData = () => {
     dateIn.value = retireDate.toISOString().split('T')[0];
 };
 
+/**********************************************************************************************************************
+ * Function that clears all input data and errors messages
+ *
+ * @returns {void}
+ **********************************************************************************************************************/
 const resetForm = () => {
     /*
         clears all input fields
@@ -177,11 +208,11 @@ const resetForm = () => {
     clearTimeout(projectionTimer);
     document.querySelectorAll("input").forEach(s => s.value = "");
     document.body.style.width = "350px";
-    nameErr.focus();
     statusMsg.style.color = "red";
     nameIn.focus();
 };
 
+// add DOMContentLoaded listener's for buttons and ENTER button functionality
 document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", processEntries);
     form.addEventListener("reset", resetForm);
