@@ -29,7 +29,7 @@ const processEntries = (evt) => {
     let years = 0;
 
     evt.preventDefault();
-    resetForm();
+    // resetForm();
 
     // Validate Name
     if (!nameIn.value) {
@@ -104,17 +104,8 @@ const resetForm = () => {
         set the focus to the name input field
      */
     document.querySelectorAll(".error").forEach(s => s.textContent = "*");
-        nameIn.value = "";
-        emailIn.value = "";
-        investIn.value = "";
-        addIn.value = "";
-        rateIn.value = "";
-        dateIn.value = "";
-        errBox.textContent = "";
-        statusMsg.textContent = "";
-        output.innerHTML = "";
-        document.body.style.width = "350px";
-
+    document.querySelectorAll("input").forEach(s => s.value = "");
+    document.body.style.width = "350px";
 };
 
 document.addEventListener("DOMContentLoaded", () => {
