@@ -78,6 +78,12 @@ const processEntries = (evt) => {
     }
 
     // TODO: Numeric Validations
+    document.querySelectorAll(".numericInput").forEach(numericInput => {
+        if (isNaN(parseInt(numericInput.value))) {
+            isValid = false;
+            numericInput.nextElementSibling.textContent = numericInput.title;
+        }
+    })
 
     /* TODO: Code try-catch logic
         try
