@@ -13,27 +13,26 @@
 // Defer in HTML allows us to grab these immediately at the top
 const $ = selector => document.querySelector(selector);
 
-const nameIn    = $("#client_name");
-const emailIn   = $("#email");
-const investIn  = $("#investment");
-const addIn     = $("#monthly_add");
-const rateIn    = $("#rate");
-const dateIn    = $("#retirement_date");
+// cache DOM elements
+const nameIn    = $("#client_name");        // input element for the user's name
+const emailIn   = $("#email");              // input element for the user's email
+const investIn  = $("#investment");         // input element for the user's initial investment
+const addIn     = $("#monthly_add");        // input element for the user's monthly contribution
+const rateIn    = $("#rate");               // input element for the user's yearly interest rate
+const dateIn    = $("#retirement_date");    // input element for the user's retirement date
+const nameErr = $("#name_error");           // span element displaying error msg's for user's name
+const emailErr = $("#email_error");         // span element displaying error msg's for user's email
+const investErr = $("#investment_error");   // span element displaying error msg's for user's initial invest
+const addErr = $("#add_error");             // span element displaying error msg's for user's monthly contrib
+const rateErr = $("#rate_error");           // span element displaying error msg's for user's interest rate
+const dateErr = $("#retire_date_error");    // span element displaying error msg's for user's retire date
+const errBox    = $("#error_message");      // div for displaying an error msg at top of screen
+const statusMsg = $("#status_message");     // h3 displaying "Live projection: {user's name}"
+const output    = $("#projection_output");  // div displaying projection calculations
+const form      = $("#projection_form");    // DOM element for entire form
+const testData  = $("#test_data");          // test data btn
 
-const nameErr = $("#name_error");
-const emailErr = $("#email_error");
-const investErr = $("#investment_error");
-const addErr = $("#add_error");
-const rateErr = $("#rate_error");
-const dateErr = $("#retire_date_error");
-
-const errBox    = $("#error_message");
-const statusMsg = $("#status_message");
-const output    = $("#projection_output");
-const form      = $("#projection_form");
-const testData  = $("#test_data");
-
-let projectionTimer = null;
+let projectionTimer = null;                    // timer used to display calculation year by year
 
 // define a number formatting object that formats numbers in the form of US currency
 const formatter = new Intl.NumberFormat('en-US', {
@@ -51,9 +50,10 @@ const formatter = new Intl.NumberFormat('en-US', {
  * @returns {void}
  **********************************************************************************************************************/
 const processEntries = (evt) => {
-    let isValid = true;
-    let years = 0;
+    let isValid = true; // defines whether data validation passed
+    let years = 0;      // keeps count of num of years for date calculations
 
+    // prevent form submission and clear any errors displayed
     evt.preventDefault();
     clearErrors();
 
@@ -62,41 +62,20 @@ const processEntries = (evt) => {
         isValid = false;
         nameErr.textContent = nameIn.title; // Pull error message from title attribute
     }
+
     // TODO: Validate Email
-    const emailPattern = "/^[\\w\\.\\-]+@[\\w\\.\\-]+\\.[a-zA-Z]+$/";
-    if (emailIn.value.trim() === "") {
-        isValid = false;
-        emailErr.textContent = emailIn.title; // Pull error message from title attribute
-    }
-    else if (!emailPattern.test(emailIn.value.trim())) {
+    const emailPattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+    if (!emailPattern.test(emailIn.value.trim())) {
         isValid = false;
         emailErr.textContent = emailIn.title;
     }
 
-    if (investIn.value.trim() === "") {
-        isValid = false;
-        investErr.textContent = investIn.title; // Pull error message from title attribute
-    }
-
-    if (rateIn.value.trim() === "" || rateIn.value.trim() < 0 || rateIn.value.trim() > 20) {
-        isValid = false;
-        rateErr.textContent = rateIn.title; // Pull error message from title attribute
-    }
+    // TODO: Validate Date
     // TO DO: Make sure date is within 75 DOES NOT WORKKK
     if (retirement_date.value.trim() === "" || retirement_date.value < 0 || retirement_date.value > 75) {
         isValid = false;
         dateErr.textContent = dateIn.title; // Pull error message from title attribute
     }
-
-    if (addIn.value.trim() === "") {
-        isValid = false;
-        addErr.textContent = addIn.title; // Pull error message from title attribute
-    }else if(addIn.value.trim() < 0){
-        isValid = false;
-        addErr.textContent = "How much you add each month, not less than 0.";
-    }
-
-    // TODO: Validate Date
 
     // TODO: Numeric Validations
 
@@ -171,9 +150,9 @@ const setTestData = () => {
     // set default values for all input fields
     nameIn.value = "John Doe";
     emailIn.value = "john.doe@example.com";
-    investIn.value = "10000";
+    investIn.value = "100000";
     addIn.value = "500";
-    rateIn.value = "5";
+    rateIn.value = "5.5";
     const retireDate = new Date();
     retireDate.setFullYear(retireDate.getFullYear() + 10);
     dateIn.value = retireDate.toISOString().split('T')[0];
@@ -204,8 +183,11 @@ const resetForm = () => {
         set the statusMsg to red (see code example above)
         set the focus to the name input field (Ch 9)
      */
+    errBox.textContent = "";
+    output.innerHTML = "";
+    statusMsg.textContent = "";
+    clearInterval(projectionTimer);
     document.querySelectorAll(".error").forEach(s => s.textContent = "*");
-    clearTimeout(projectionTimer);
     document.querySelectorAll("input").forEach(s => s.value = "");
     document.body.style.width = "350px";
     statusMsg.style.color = "red";
