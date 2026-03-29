@@ -78,8 +78,8 @@ const processEntries = (evt) => {
     }
 
     // TODO: Numeric Validations
-    document.querySelectorAll(".numericInput").forEach(numericInput => {
-        if (isNaN(parseInt(numericInput.value))) {
+        document.querySelectorAll(".numericInput").forEach(numericInput => {
+        if (numericInput.value.trim() === "" || isNaN(Number(numericInput.value.trim()))) {
             isValid = false;
             numericInput.nextElementSibling.textContent = numericInput.title;
         }
