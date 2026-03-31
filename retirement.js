@@ -127,14 +127,12 @@ const processEntries = (evt) => {
  * @returns {void}
  **********************************************************************************************************************/
 const startProjection = (name, bal, add, rate, years) => {
-    clearInterval(projectionTimer);
-    document.querySelectorAll(".error").forEach(s => s.textContent = "");
     statusMsg.textContent = `Live Projection: ${name}`;
     statusMsg.style.color = "red";
     let count = 1;
 
     // TO-DO: startYear = the current year
-    const startYear = new Date().getFullYear();
+    let startYear = new Date().getFullYear();
 
     let formattedBal = formatter.format(bal);
     output.innerHTML = `Year ${startYear} = ${formattedBal}`;
@@ -152,6 +150,19 @@ const startProjection = (name, bal, add, rate, years) => {
         end if
         add one to the count
      */
+    projectionTimer = setInterval(() => {
+        for (let i = 1; i <= 12; i++) {
+            bal = ((bal + add) * (1 + (rate / 12 / 100))).toFixed(2);
+        }
+        formattedBal = formatter.format(bal);
+        startYear++;
+        output.innerHTML = `Year ${startYear} = ${formattedBal}`;
+        if (count >= years){ statusMsg.textContent = "Calculation Complete!";
+            clearInterval(projectionTimer);
+            statusMsg.style.color = "green";
+        }
+        count++;
+    },1000)
 };
 
 /**********************************************************************************************************************
