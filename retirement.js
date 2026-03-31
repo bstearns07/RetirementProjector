@@ -104,6 +104,8 @@ const processEntries = (evt) => {
         evt.preventDefault();
         document.body.style.width = "750px";
         nameIn.focus();
+        output.innerHTML = "";
+        statusMsg.textContent = "";
     } else {
         startProjection(nameIn.value, investIn.value, addIn.value, rateIn.value, years);
     }
@@ -123,6 +125,7 @@ const processEntries = (evt) => {
  * @returns {void}
  **********************************************************************************************************************/
 const startProjection = (name, bal, add, rate, years) => {
+    document.querySelectorAll(".error").forEach(s => s.textContent = "");
     statusMsg.textContent = `Live Projection: ${name}`;
     statusMsg.style.color = "red";
     let count = 1;
