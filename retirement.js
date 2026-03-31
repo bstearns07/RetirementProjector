@@ -52,6 +52,7 @@ const formatter = new Intl.NumberFormat('en-US', {
  * @returns {void}
  **********************************************************************************************************************/
 const processEntries = (evt) => {
+    clearInterval(projectionTimer);
     let isValid = true; // defines whether data validation passed
     let years = 0;      // keeps count of num of years for date calculations
 
