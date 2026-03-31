@@ -65,16 +65,20 @@ const processEntries = (evt) => {
         nameErr.textContent = nameIn.title; // Pull error message from title attribute
     }
 
-    // TODO: Validate Email
+    // Validate Email
     const emailPattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
     if (!emailPattern.test(emailIn.value.trim())) {
         isValid = false;
         emailErr.textContent = emailIn.title;
     }
 
-    // TODO: Validate Date
-    // TO DO: Make sure date is within 75 DOES NOT WORKKK
-    if (retirement_date.value.trim() === "" || retirement_date.value < 0 || retirement_date.value > 75) {
+    //  Validate Date
+    // Make sure date is within 75 DOES NOT WORKKK
+    const retireYear = new Date(dateIn.value).getFullYear();
+    const currentYear = new Date().getFullYear();
+    const yearsUntilRetirement = retireYear - currentYear;
+    
+    if (dateIn.value.trim() === "" || yearsUntilRetirement < 0 || yearsUntilRetirement > 75) {
         isValid = false;
         dateErr.textContent = dateIn.title; // Pull error message from title attribute
     }
