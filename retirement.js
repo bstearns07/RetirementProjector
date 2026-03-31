@@ -20,12 +20,14 @@ const investIn  = $("#investment");         // input element for the user's init
 const addIn     = $("#monthly_add");        // input element for the user's monthly contribution
 const rateIn    = $("#rate");               // input element for the user's yearly interest rate
 const dateIn    = $("#retirement_date");    // input element for the user's retirement date
+
 const nameErr = $("#name_error");           // span element displaying error msg's for user's name
 const emailErr = $("#email_error");         // span element displaying error msg's for user's email
 const investErr = $("#investment_error");   // span element displaying error msg's for user's initial invest
 const addErr = $("#add_error");             // span element displaying error msg's for user's monthly contrib
 const rateErr = $("#rate_error");           // span element displaying error msg's for user's interest rate
 const dateErr = $("#retire_date_error");    // span element displaying error msg's for user's retire date
+
 const errBox    = $("#error_message");      // div for displaying an error msg at top of screen
 const statusMsg = $("#status_message");     // h3 displaying "Live projection: {user's name}"
 const output    = $("#projection_output");  // div displaying projection calculations
@@ -98,6 +100,8 @@ const processEntries = (evt) => {
         evt.preventDefault();
         document.body.style.width = "750px";
         nameIn.focus();
+    } else {
+        startProjection(nameIn.value, investIn.value, addIn.value, rateIn.value, years);
     }
 }
 
