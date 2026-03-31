@@ -85,7 +85,7 @@ const processEntries = (evt) => {
 
     // TODO: Numeric Validations
         document.querySelectorAll(".numericInput").forEach(numericInput => {
-        if (numericInput.value.trim() === "" || isNaN(Number(numericInput.value.trim()))) {
+        if (numericInput.value.trim() === "" || isNaN(Number(numericInput.value.trim())) || numericInput.value.trim() <= 0) {
             isValid = false;
             numericInput.nextElementSibling.textContent = numericInput.title;
         }
@@ -107,6 +107,7 @@ const processEntries = (evt) => {
         output.innerHTML = "";
         statusMsg.textContent = "";
         errBox.innerText = "Please correct the entries highlighted below.";
+        
     } else {
         startProjection(nameIn.value, investIn.value, addIn.value, rateIn.value, years);
     }
@@ -126,6 +127,7 @@ const processEntries = (evt) => {
  * @returns {void}
  **********************************************************************************************************************/
 const startProjection = (name, bal, add, rate, years) => {
+    clearInterval(projectionTimer);
     document.querySelectorAll(".error").forEach(s => s.textContent = "");
     statusMsg.textContent = `Live Projection: ${name}`;
     statusMsg.style.color = "red";
