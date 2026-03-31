@@ -105,7 +105,7 @@ const processEntries = (evt) => {
         document.body.style.width = "750px";
         nameIn.focus();
         output.innerHTML = "";
-        statusMsg.textContent = "";
+        statusMsg.textContent = "Please correct the entries highlighted below.";
     } else {
         startProjection(nameIn.value, investIn.value, addIn.value, rateIn.value, years);
     }
