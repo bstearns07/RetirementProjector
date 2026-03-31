@@ -109,7 +109,7 @@ const processEntries = (evt) => {
         errBox.innerText = "Please correct the entries highlighted below.";
         
     } else {
-        startProjection(nameIn.value, investIn.value, addIn.value, rateIn.value, years);
+        startProjection(nameIn.value,Number(investIn.value), Number(addIn.value), Number(rateIn.value), years);
     }
 }
 
