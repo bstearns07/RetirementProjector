@@ -23,8 +23,8 @@ const dateIn    = $("#retirement_date");    // input element for the user's reti
 
 const nameErr = $("#name_error");           // span element displaying error msg's for user's name
 const emailErr = $("#email_error");         // span element displaying error msg's for user's email
-const investErr = $("#investment_error");   // span element displaying error msg's for user's initial invest
-const addErr = $("#add_error");             // span element displaying error msg's for user's monthly contrib
+//const investErr = $("#investment_error");   // span element displaying error msg's for user's initial invest
+//const addErr = $("#add_error");             // span element displaying error msg's for user's monthly contrib
 const rateErr = $("#rate_error");           // span element displaying error msg's for user's interest rate
 const dateErr = $("#retire_date_error");    // span element displaying error msg's for user's retire date
 
@@ -52,13 +52,13 @@ const formatter = new Intl.NumberFormat('en-US', {
  * @returns {void}
  **********************************************************************************************************************/
 const processEntries = (evt) => {
-    clearInterval(projectionTimer);
     let isValid = true; // defines whether data validation passed
     let years = 0;      // keeps count of num of years for date calculations
 
-    // prevent form submission and clear any errors displayed
+    // prevent form submission and clear any errors and timers that are present
     evt.preventDefault();
     clearErrors();
+    clearInterval(projectionTimer);
 
     // Validate Name
     if (nameIn.value.trim() === "") {
@@ -74,19 +74,24 @@ const processEntries = (evt) => {
     }
 
     //  Validate Date
-    // Make sure date is within 75 DOES NOT WORKKK
-    const retireYear = new Date(dateIn.value).getFullYear();
-    const currentYear = new Date().getFullYear();
-    years = retireYear - currentYear;
-    
-    if (dateIn.value.trim() === "" || years < 0 || years > 75) {
+    const retirementDate = new Date(dateIn.value);
+    const today = new Date();
+    years = retirementDate.getFullYear() - today.getFullYear();
+    if (retirementDate.toString() === "Invalid Date" || years < 0 || years > 75) {
         isValid = false;
         dateErr.textContent = dateIn.title; // Pull error message from title attribute
     }
 
     // TODO: Numeric Validations
-        document.querySelectorAll(".numericInput").forEach(numericInput => {
-        if (numericInput.value.trim() === "" || isNaN(Number(numericInput.value.trim())) || numericInput.value.trim() <= 0) {
+    // ensure interest rate is > 0 and <= 20
+    if (rateIn.value <= 0 || rateIn.value > 20){
+        isValid = false;
+        rateErr.textContent = rateIn.title;
+    }
+
+    // validate that all numeric fields are not empty, are numeric, and aren't < 0
+    document.querySelectorAll(".numericInput").forEach(numericInput => {
+        if (numericInput.value.trim() === "" || isNaN(Number(numericInput.value.trim())) || numericInput.value.trim() < 0) {
             isValid = false;
             numericInput.nextElementSibling.textContent = numericInput.title;
         }
@@ -101,16 +106,17 @@ const processEntries = (evt) => {
             set the body width to 700px (like code above)
             errBox.innerText = e.message;
      */
-    if (!isValid) {
-        evt.preventDefault();
-        document.body.style.width = "750px";
+    try{
+        if (!isValid) {
+            throw new Error("Please correct the entries highlighted below.");
+        }
+        document.body.style.width = "350px";
         nameIn.focus();
-        output.innerHTML = "";
-        statusMsg.textContent = "";
-        errBox.innerText = "Please correct the entries highlighted below.";
-        
-    } else {
-        startProjection(nameIn.value,Number(investIn.value), Number(addIn.value), Number(rateIn.value), years);
+        startProjection(nameIn.value, Number(investIn.value), Number(addIn.value), Number(rateIn.value), years);
+    }
+    catch (e){
+        document.body.style.width = "700px";
+        errBox.innerText = e.message;
     }
 }
 
@@ -128,13 +134,16 @@ const processEntries = (evt) => {
  * @returns {void}
  **********************************************************************************************************************/
 const startProjection = (name, bal, add, rate, years) => {
+    let count = 1;  // tracks loop interaction count
+
+    //set status message to display the user's name, and it's default color to red
     statusMsg.textContent = `Live Projection: ${name}`;
     statusMsg.style.color = "red";
-    let count = 1;
 
     // TO-DO: startYear = the current year
     let startYear = new Date().getFullYear();
 
+    // formate the user's starting balance to us currency and display as output
     let formattedBal = formatter.format(bal);
     output.innerHTML = `Year ${startYear} = ${formattedBal}`;
 
