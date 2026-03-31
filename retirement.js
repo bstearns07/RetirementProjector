@@ -76,9 +76,9 @@ const processEntries = (evt) => {
     // Make sure date is within 75 DOES NOT WORKKK
     const retireYear = new Date(dateIn.value).getFullYear();
     const currentYear = new Date().getFullYear();
-    const yearsUntilRetirement = retireYear - currentYear;
+    years = retireYear - currentYear;
     
-    if (dateIn.value.trim() === "" || yearsUntilRetirement < 0 || yearsUntilRetirement > 75) {
+    if (dateIn.value.trim() === "" || years < 0 || years > 75) {
         isValid = false;
         dateErr.textContent = dateIn.title; // Pull error message from title attribute
     }
