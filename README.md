@@ -3,7 +3,7 @@
 ![CSS](https://img.shields.io/badge/CSS-3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)<br>
-![retirement-projector](assets/default.png)
+![retirement-projector](assets/default_state.png)
 
 ---
 
@@ -94,7 +94,7 @@ For full program details, refer to [Program Requirements](./assets/ProgramInstru
 ## 📘 What We Learned
 
 We learned that some data validation can be achieved through HTML attributes alone. This can save a lot on coding this validation manually. However, 
-HTML validation is often not sufficient enough, requiring more sophisticated validation requirements. This is where JavaScript can shine.
+are times HTML validation is often not sufficient, requiring more sophisticated validation requirements. This is where JavaScript can shine.
 JavaScript provides for both client and server-side validation to ensure data is secure on both ends of the application. It was also great to learn
 how JavaScript in particular interprets dates and milliseconds since epoch time and how to perform calculations with these figures. Timers are also
 a powerful feauture to create very dynamic, time-sensitive applications by running functions at set intervals.
