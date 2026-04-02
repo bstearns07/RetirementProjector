@@ -20,7 +20,7 @@ Isaiah Guilliatt - [@isguil02](https://github.com/isguil02)
 - [🧰 Tech Stack](#-tech-stack)
 - [⚙️ How It Works](#-how-it-works-)
 - [🧠 Topics Covered](#-topics-covered)
-- [📘 What We Learned](#-what-i-learned)
+- [📘 What We Learned](#-what-we-learned)
 - [🖼 Screenshots](#-screenshots)
 
 ---
@@ -32,7 +32,7 @@ will calculate how much your investment will grow over the years. Just tell it h
 how much expect to add each month, and your investment interest rate. The calculator will do the rest, displaying how your account will grow
 over the years until your expected retirement date. Give it a try!
 
-For full program details, refer to [Program Requirements](./assets/ProgramInstructions.pdf) 
+For full program details, refer to [Program Requirements](./assets/Assignment_Instructions.pdf) 
 
 ---
 
@@ -58,7 +58,7 @@ For full program details, refer to [Program Requirements](./assets/ProgramInstru
 - Vanilla JavaScript (ES6+)
 
 ### 🧩 Core Concepts
-- Date/Time manangment
+- Date/Time management
 - Timer functionality
 - Data Validation through HTML and scripting
 
@@ -79,7 +79,7 @@ For full program details, refer to [Program Requirements](./assets/ProgramInstru
 ## Validation Requirements
 1. All fields are required
 2. Email must be a valid email according to a full regex pattern match
-3. All numric fields must be greater than 0, including retirement date
+3. All numeric fields must be greater than 0, including retirement date
 4. Investment rate must be less than 20
 5. Retirement date must be less than 75 years in the future
 
