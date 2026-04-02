@@ -104,9 +104,9 @@ a powerful feauture to create very dynamic, time-sensitive applications by runni
 ## 🖼 Screenshots
 
 ### 🖼 Default State
-
+![Default ](assets/default_state.png)
 ### Valid Data
-
+![Valid Data](assets/final_projection.png)
 ### Invalid Data
-
+![Invalid Data](assets/validation.png)
 ⬆️ [Back to Top](#retirement-projector)
