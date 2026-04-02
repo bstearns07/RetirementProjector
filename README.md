@@ -37,7 +37,7 @@ For full program details, refer to [Program Requirements](./assets/Assignment_In
 ---
 
 ## 🚀 Live Demo
-![Retirement Projector Live Demo](assets/demo.gif)<br>
+![Retirement Projector Live Demo](assets/projection.gif)<br>
 [🔗 Click Here to Give the Retirement Projector a Try! ↗](https://bstearns07.github.io/RetirementProjector/)
 
 ---
