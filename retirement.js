@@ -96,7 +96,14 @@ const processEntries = (evt) => {
             numericInput.nextElementSibling.textContent = numericInput.title;
         }
     })
+        
 
+    if (investIn.value == 0 && addIn.value == 0){
+        isValid = false;
+        investment_error.textContent = "Investment and Monthly Add can't both be 0.";
+        add_error.textContent = "Investment and Monthly Add can't both be 0.";
+        
+    }
     /* TODO: Code try-catch logic
         try
             if not valid then throw error "Please correct the entries highlighted below."
@@ -134,6 +141,7 @@ const processEntries = (evt) => {
  * @returns {void}
  **********************************************************************************************************************/
 const startProjection = (name, bal, add, rate, years) => {
+    document.querySelectorAll(".error").forEach(s => s.textContent = "");
     let count = 1;  // tracks loop interaction count
 
     //set status message to display the user's name, and it's default color to red
