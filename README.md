@@ -27,7 +27,7 @@ Isaiah Guilliatt - [@isguil02](https://github.com/isguil02)
 
 ## 📌 Summary
 
-Curious how much your retirement account when the times comes to kick back in your lazy boy? Then look no further. The Retirement Project
+Curious how much your retirement account will grow by the time you hang up your working hat for good? Then look no further. The Retirement Projector
 will calculate how much your investment will grow over the years. Just tell it how much is currently in your account, 
 how much expect to add each month, and your investment interest rate. The calculator will do the rest, displaying how your account will grow
 over the years until your expected retirement date. Give it a try!
@@ -46,8 +46,8 @@ For full program details, refer to [Program Requirements](./assets/Assignment_In
 
 - HTML and custom JavaScript validation, including regular expressions
 - Reset button for clearing all fields
-- Text Data button for loading valid test entries to all fields
-- Displays calculation results month by month, counting up to your retirement date as a timer
+- Test Data button for loading valid test entries into all fields
+- Displays calculation results month by month, counting up to your retirement date using a timer
 ---
 
 ## 🧰 Tech Stack
@@ -61,6 +61,7 @@ For full program details, refer to [Program Requirements](./assets/Assignment_In
 - Date/Time management
 - Timer functionality
 - Data Validation through HTML and scripting
+- Local data storage that stores your previous valid form data
 
 ### 🛠 Development Tools
 - Git & GitHub
@@ -72,14 +73,15 @@ For full program details, refer to [Program Requirements](./assets/Assignment_In
 1. Open `index.html`
 2. Enter valid entries into all fields
 3. Click Calculate, and the calculator will display the growth of your investment month by month, counting up until your final retirement date
-4. Click Reset to clear all field as needed
+4. Click Reset to clear all fields/messages as needed
 5. Click Test Data and then Calculate to load valid test data into all fields to see how it works
+6. If you refresh the page, your last valid form submission data is automatically populated for as long as your current browser session is active
 
 ---
 ## Validation Requirements
 1. All fields are required
 2. Email must be a valid email according to a full regex pattern match
-3. All numeric fields must be greater than 0, including retirement date
+3. All numeric fields must be >= 0, including retirement date
 4. Investment rate must be less than 20
 5. Retirement date must be less than 75 years in the future
 
@@ -88,6 +90,7 @@ For full program details, refer to [Program Requirements](./assets/Assignment_In
 - Time and Date Manipulation
 - Data Validation through HTML attribute binding and scripting
 - SetInterval() for executing timer functions
+- Local Storage of user data
 
 ---
 

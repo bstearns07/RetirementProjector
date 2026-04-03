@@ -10,7 +10,19 @@
 
 "use strict";
 
-// Defer in HTML allows us to grab these immediately at the top
+/***********************************************************************************************************************
+ * Shorthand utility for selecting the first DOM element that matches a CSS selector.
+ *
+ * @param {string} selector - A valid CSS selector string used to query the DOM.
+ * @returns {Element|null} The first Element within the document that matches the selector,
+ * or null if no matches are found.
+ *
+ * @example
+ * const button = $('#submitBtn');
+ * if (button) {
+ *     button.textContent = 'Submitted';
+ * }
+ * ********************************************************************************************************************/
 const $ = selector => document.querySelector(selector);
 
 // cache DOM elements
@@ -23,8 +35,8 @@ const dateIn    = $("#retirement_date");    // input element for the user's reti
 
 const nameErr = $("#name_error");           // span element displaying error msg's for user's name
 const emailErr = $("#email_error");         // span element displaying error msg's for user's email
-//const investErr = $("#investment_error");   // span element displaying error msg's for user's initial invest
-//const addErr = $("#add_error");             // span element displaying error msg's for user's monthly contrib
+const investErr = $("#investment_error");   // span element displaying error msg's for user's initial invest
+const addErr = $("#add_error");             // span element displaying error msg's for user's monthly contrib
 const rateErr = $("#rate_error");           // span element displaying error msg's for user's interest rate
 const dateErr = $("#retire_date_error");    // span element displaying error msg's for user's retire date
 
@@ -47,7 +59,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 /**********************************************************************************************************************
  * Function that processes user entries for valid data and throws an error if invalid data is found
  *
- * @param evt  The submit button event
+ * @param {SubmitEvent} evt  The submit button event
  *
  * @returns {void}
  **********************************************************************************************************************/
@@ -74,17 +86,21 @@ const processEntries = (evt) => {
     }
 
     //  Validate Date
+    // get the user's retirement date, today's date, and the difference in years
     const retirementDate = new Date(dateIn.value);
     const today = new Date();
     years = retirementDate.getFullYear() - today.getFullYear();
-    if (retirementDate.toString() === "Invalid Date" || years < 0 || years > 75) {
+
+    // if the user's date is invalid, in the past, or > 75 years away, count as invalid
+    // getTime() is more accurate than years. Otherwise, setting the retirement date to yesterday would be valid
+    if (retirementDate.toString() === "Invalid Date" || retirementDate.getTime() - today.getTime() < 0 || years > 75) {
         isValid = false;
         dateErr.textContent = dateIn.title; // Pull error message from title attribute
     }
 
     // TODO: Numeric Validations
     // ensure interest rate is > 0 and <= 20
-    if (rateIn.value <= 0 || rateIn.value > 20){
+    if (rateIn.value < 0 || rateIn.value > 20){
         isValid = false;
         rateErr.textContent = rateIn.title;
     }
@@ -96,27 +112,28 @@ const processEntries = (evt) => {
             numericInput.nextElementSibling.textContent = numericInput.title;
         }
     })
-        
 
-    if (investIn.value == 0 && addIn.value == 0){
+    // ensure that starting investment and monthly contribution aren't 0 at the same time
+    if (investIn.value === "0" && addIn.value === "0"){
         isValid = false;
-        investment_error.textContent = "Investment and Monthly Add can't both be 0.";
-        add_error.textContent = "Investment and Monthly Add can't both be 0.";
-        
+        investErr.textContent = "Investment and Monthly Add can't both be 0.";
+        addErr.textContent = "Investment and Monthly Add can't both be 0.";
     }
-    /* TODO: Code try-catch logic
-        try
-            if not valid then throw error "Please correct the entries highlighted below."
-            document.body.style.width = "350px";
-            startProjection(nameIn.value, invest, add, rate, years);
-         catch(e)
-            set the body width to 700px (like code above)
-            errBox.innerText = e.message;
-     */
+
+    // if any data is invalid, throw an error and display it at the top of the screen
+    // otherwise, store user's data in local storage and use it to start their projection
     try{
         if (!isValid) {
             throw new Error("Please correct the entries highlighted below.");
         }
+        //storage user's data in local storage
+        localStorage.name = nameIn.value;
+        localStorage.email = emailIn.value;
+        localStorage.investment = investIn.value;
+        localStorage.monthlyAdd = addIn.value;
+        localStorage.rate = rateIn.value;
+        localStorage.date = dateIn.value;
+
         document.body.style.width = "350px";
         nameIn.focus();
         startProjection(nameIn.value, Number(investIn.value), Number(addIn.value), Number(rateIn.value), years);
@@ -155,19 +172,7 @@ const startProjection = (name, bal, add, rate, years) => {
     let formattedBal = formatter.format(bal);
     output.innerHTML = `Year ${startYear} = ${formattedBal}`;
 
-    /* TODO: setup an interval to do the following
-        for (let i = 0; i < 12; i++) {
-            bal = ((bal + add) * (1 + (rate / 12 / 100))).toFixed(2);
-        }
-        format the balance like the starting code above
-        update the output like the starting code above
-        if count is >= years
-            clear interval
-            update the statusMsg like the starting code above
-            set the statusMsg color to green like the starting code above
-        end if
-        add one to the count
-     */
+    // set the projection timer to calculate investment growth year to year, format as US currency and display
     projectionTimer = setInterval(() => {
         for (let i = 1; i <= 12; i++) {
             bal = ((bal + add) * (1 + (rate / 12 / 100))).toFixed(2);
@@ -175,6 +180,8 @@ const startProjection = (name, bal, add, rate, years) => {
         formattedBal = formatter.format(bal);
         startYear++;
         output.innerHTML = `Year ${startYear} = ${formattedBal}`;
+
+        // once the retirement year has been reach, clear the timer and set the status color to green
         if (count >= years){ statusMsg.textContent = "Calculation Complete!";
             clearInterval(projectionTimer);
             statusMsg.style.color = "green";
@@ -208,7 +215,7 @@ const setTestData = () => {
 };
 
 /**********************************************************************************************************************
- * Function that clears all input data and errors messages
+ * Function that clears all input data, status messages, and errors messages from the screen
  *
  * @returns {void}
  **********************************************************************************************************************/
@@ -220,18 +227,7 @@ const resetForm = () => {
         set the body width to 350px (like code above)
         set the focus to the name input field
      */
-    /* TODO:
-        Using textContent clear the following error spans
-            errBox (#error_message)
-            output (#projection_output)
-            statusMsg (#status_message)
-        clear the interval projectionTimer (Ch 8)
-        reset all the error spans back to *
-            document.querySelectorAll(".error").forEach(s => s.textContent = "*");
-        set the body width to 350px (see code example above)
-        set the statusMsg to red (see code example above)
-        set the focus to the name input field (Ch 9)
-     */
+
     errBox.textContent = "";
     output.innerHTML = "";
     statusMsg.textContent = "";
@@ -250,10 +246,21 @@ const resetForm = () => {
  **********************************************************************************************************************/
 const clearErrors = () => {
     document.querySelectorAll(".error").forEach(s => s.textContent = "*");
+    statusMsg.textContent = "";
+    output.innerHTML = "";
+    errBox.textContent = "";
 }
 
 // add DOMContentLoaded listener's for button functionality
 document.addEventListener("DOMContentLoaded", () => {
+    // load any data in local storage to pre-fill the fields
+    nameIn.value = localStorage.name ?? "";
+    emailIn.value = localStorage.email ?? "";
+    investIn.value = localStorage.investment ?? "";
+    addIn.value = localStorage.monthlyAdd ?? "";
+    rateIn.value = localStorage.rate ?? "";
+    dateIn.value = localStorage.date ?? "";
+
     form.addEventListener("submit", processEntries);
     form.addEventListener("reset", resetForm);
     testData.addEventListener("click", setTestData);
