@@ -3,25 +3,29 @@
 ![CSS](https://img.shields.io/badge/CSS-3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)<br>
-![retirement-projector](assets/default_state.png)
 
 ---
 
 ## 👤 Authors
-Ben Stearns - [@bstearns07](https://github.com/bstearns07)<br>
+Ben Stearns - [@bstearns07](https://github.com/bstearns07)
+
 Isaiah Guilliatt - [@isguil02](https://github.com/isguil02)
+
+📅 Date: 4/2/2026
 
 ---
 
 ## 📑 Table of Contents
-- [📌 Summary](#-summary)
-- [🚀 Live Demo](#-live-demo)
-- [✨ Features](#-features)
-- [🧰 Tech Stack](#-tech-stack)
-- [⚙️ How It Works](#-how-it-works-)
-- [🧠 Topics Covered](#-topics-covered)
-- [📘 What We Learned](#-what-we-learned)
-- [🖼 Screenshots](#-screenshots)
+- 📌 [Summary](#-summary)
+- ⭐ [How It Works](#-how-it-works)
+- 🚀 [Live Demo](#-live-demo)
+- ✨ [Features](#-features)
+- 🧰 [Tech Stack](#-tech-stack)
+- 🔧 [Development Tools](#-development-tools)
+- 🧩 [Core Concepts](#-core-concepts)
+- 📝 [New Topics Covered](#-new-topics-covered)
+- 📘 [What I Learned](#-what-i-learned)
+- 🖼 [Screenshots](#-screenshots)
 
 ---
 
@@ -33,6 +37,26 @@ how much expect to add each month, and your investment interest rate. The calcul
 over the years until your expected retirement date. Give it a try!
 
 For full program details, refer to [Program Requirements](./assets/Assignment_Instructions.pdf) 
+
+---
+
+## ⭐ How It Works 
+
+1. Open `index.html`
+2. Enter valid entries into all fields
+3. Click Calculate, and the calculator will display the growth of your investment month by month, counting up until your final retirement date
+4. Click Reset to clear all fields/messages as needed
+5. Click Test Data and then Calculate to load valid test data into all fields to see how it works
+6. If you refresh the page, your last valid form submission data is automatically populated for as long as your current browser session is active
+
+---
+
+### Validation Requirements
+1. All fields are required
+2. Email must be a valid email according to a full regex pattern match
+3. All numeric fields must be >= 0, including retirement date
+4. Investment rate must be less than 20
+5. Retirement date must be less than 75 years in the future
 
 ---
 
@@ -63,29 +87,15 @@ For full program details, refer to [Program Requirements](./assets/Assignment_In
 - Data Validation through HTML and scripting
 - Local data storage that stores your previous valid form data
 
+---
+
 ### 🛠 Development Tools
 - Git & GitHub
 - WebStorm
 
 ---
-## ⚙️ How It Works 
 
-1. Open `index.html`
-2. Enter valid entries into all fields
-3. Click Calculate, and the calculator will display the growth of your investment month by month, counting up until your final retirement date
-4. Click Reset to clear all fields/messages as needed
-5. Click Test Data and then Calculate to load valid test data into all fields to see how it works
-6. If you refresh the page, your last valid form submission data is automatically populated for as long as your current browser session is active
-
----
-## Validation Requirements
-1. All fields are required
-2. Email must be a valid email according to a full regex pattern match
-3. All numeric fields must be >= 0, including retirement date
-4. Investment rate must be less than 20
-5. Retirement date must be less than 75 years in the future
-
-## 🧠 Topics Covered
+## 📝 New Topics Covered
 
 - Time and Date Manipulation
 - Data Validation through HTML attribute binding and scripting
@@ -94,7 +104,7 @@ For full program details, refer to [Program Requirements](./assets/Assignment_In
 
 ---
 
-## 📘 What We Learned
+## 📘 What I Learned
 
 We learned that some data validation can be achieved through HTML attributes alone. This can save a lot on coding this validation manually. However, 
 are times HTML validation is often not sufficient, requiring more sophisticated validation requirements. This is where JavaScript can shine.
@@ -108,8 +118,11 @@ a powerful feauture to create very dynamic, time-sensitive applications by runni
 
 ### 🖼 Default State
 ![Default ](assets/default_state.png)
+
 ### Valid Data
 ![Valid Data](assets/final_projection.png)
+
 ### Invalid Data
 ![Invalid Data](assets/validation.png)
+
 ⬆️ [Back to Top](#retirement-projector)
