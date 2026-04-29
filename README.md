@@ -61,8 +61,11 @@ For full program details, refer to [Program Requirements](./assets/Assignment_In
 ---
 
 ## 🚀 Live Demo
-![Retirement Projector Live Demo](assets/projection.gif)<br>
-[🔗 Click Here to Give the Retirement Projector a Try! ↗](https://bstearns07.github.io/RetirementProjector/)
+> ⬇️ **Click the link below to open the app in your browser and try it yourself!**⬇️
+
+👉 [![Open Demo](https://img.shields.io/badge/▶%20Open%20Live%20Demo-ff4b4b?style=for-the-badge)](https://bstearns07.github.io/RetirementProjector/)
+
+![Retirement Projector Live Demo](assets/projection.gif)
 
 ---
 
